@@ -2,6 +2,12 @@ extends Control
 
 @export var WordScene: PackedScene
 
+@export_group("Filler Words Timing")
+@export var min_spawn_time: float = 0.5
+@export var max_spawn_time: float = 2.0
+@export var min_display_time: float = 0.5
+@export var max_display_time: float = 1.5
+
 var phrases_by_phases = {
 	1: "Today at shool there was...",
 	2: "And it was really...",
@@ -12,12 +18,67 @@ var phrases_by_phases = {
 	7: "But I will tell..."
 }
 
+var filler_words = ["And", "Uh", "Emm", "You know", "And then", "You see", "There was"]
+var filler_spawn_timer: Timer
+var rng = RandomNumberGenerator.new()
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	for child in $HBoxContainer.get_children():
 		child.queue_free()
 	GlobalState.state_changed.connect(_on_state_changed)
 	_update_current_phrase()
+	
+	# Initialize the timer but don't start it yet
+	filler_spawn_timer = Timer.new()
+	add_child(filler_spawn_timer)
+	filler_spawn_timer.timeout.connect(_spawn_random_filler_word)
+
+func start_filler_words() -> void:
+	filler_spawn_timer.wait_time = randf_range(min_spawn_time, max_spawn_time)
+	filler_spawn_timer.start()
+
+func stop_filler_words() -> void:
+	filler_spawn_timer.stop()
+	
+	# Clear any existing filler words
+	for child in $HBoxContainer.get_children():
+		child.queue_free()
+
+func _spawn_random_filler_word() -> void:
+	# Only spawn if we're in THINKING state
+	if GlobalState.current_state != GlobalState.State.THINKING:
+		stop_filler_words()
+		return
+		
+	# Get a random filler word
+	var random_word = filler_words[randi() % filler_words.size()]
+	
+	# Create the word instance
+	var word_instance = WordScene.instantiate()
+	word_instance.word = random_word
+	$HBoxContainer.add_child(word_instance)
+	
+	# Create disappear timer with random duration
+	var timer = Timer.new()
+	add_child(timer)
+	timer.wait_time = randf_range(min_display_time, max_display_time)
+	timer.one_shot = true
+	
+	# Store reference to word_instance in the timer
+	timer.set_meta("word_instance", word_instance)
+	
+	timer.timeout.connect(func():
+		var stored_word = timer.get_meta("word_instance")
+		if is_instance_valid(stored_word):
+			stored_word.queue_free()
+		timer.queue_free()
+	)
+	timer.start()
+	
+	# Set next spawn interval
+	filler_spawn_timer.wait_time = randf_range(min_spawn_time, max_spawn_time)
+	filler_spawn_timer.start()
 
 func _update_current_phrase() -> void:
 	if phrases_by_phases.has(GlobalState.game_phase):
@@ -26,6 +87,7 @@ func _update_current_phrase() -> void:
 func _on_state_changed(new_state):
 	print(new_state)
 	if new_state == GlobalState.State.SELECTING_WORD:
+		stop_filler_words()
 		# Instanciate a new word and add it to the scene
 		var word_instance = WordScene.instantiate()
 		word_instance.word = GlobalState.selected_word.get("name")
@@ -40,6 +102,7 @@ func _on_state_changed(new_state):
 		timer.start()
 	elif new_state == GlobalState.State.THINKING:
 		_update_current_phrase()
+		start_filler_words()
 
 func _on_word_timer_timeout():
 	# Clear all words

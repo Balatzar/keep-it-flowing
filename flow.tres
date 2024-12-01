@@ -3,4 +3,7 @@
 [ext_resource type="FontFile" uid="uid://cxwyk5ja47bp3" path="res://Assets/Tropi Land - (Demo) hanscostudio.com.ttf" id="1_c2n5t"]
 
 [resource]
+Button/font_sizes/font_size = 32
+Button/fonts/font = ExtResource("1_c2n5t")
+Label/font_sizes/font_size = 32
 Label/fonts/font = ExtResource("1_c2n5t")
