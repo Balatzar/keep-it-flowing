@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://c76qxw1gr1eog"]
+
+[ext_resource type="PackedScene" uid="uid://du3jtfstotexf" path="res://UI/WordChooser/WordChooser.tscn" id="1_186og"]
+[ext_resource type="PackedScene" uid="uid://dty8trs7ko2w0" path="res://UI/WordFlow/WordFlow.tscn" id="2_lim8y"]
+
+[node name="FirstLevel" type="Node2D"]
+
+[node name="WordChooser" parent="." instance=ExtResource("1_186og")]
+offset_left = 320.0
+offset_top = 762.0
+offset_right = 320.0
+offset_bottom = 762.0
+
+[node name="WordFlow" parent="." instance=ExtResource("2_lim8y")]
+offset_left = 886.0
+offset_top = 455.0
+offset_right = 886.0
+offset_bottom = 455.0

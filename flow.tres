@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://2ujebgd0toq8"]
+
+[ext_resource type="FontFile" uid="uid://cxwyk5ja47bp3" path="res://Assets/Tropi Land - (Demo) hanscostudio.com.ttf" id="1_c2n5t"]
+
+[resource]
+Label/fonts/font = ExtResource("1_c2n5t")

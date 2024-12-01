@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://dty8trs7ko2w0"]
+
+[ext_resource type="Script" path="res://UI/WordFlow/word_flow.gd" id="1_4dhp7"]
+[ext_resource type="PackedScene" uid="uid://yfssrbt70cup" path="res://UI/Word/Word.tscn" id="2_5ucwb"]
+
+[node name="WordFlow" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_4dhp7")
+WordScene = ExtResource("2_5ucwb")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 472.0
+offset_bottom = 40.0
+
+[node name="Word2" parent="HBoxContainer" instance=ExtResource("2_5ucwb")]
+layout_mode = 2
+word = "HEYYYYYY"
+
+[node name="Word" parent="HBoxContainer" instance=ExtResource("2_5ucwb")]
+layout_mode = 2
+word = "HEY"

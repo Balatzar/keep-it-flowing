@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://du3jtfstotexf"]
+
+[ext_resource type="Script" path="res://UI/WordChooser/word_chooser.gd" id="1_ay7qh"]
+[ext_resource type="PackedScene" uid="uid://blwj1vlcnwa3a" path="res://UI/WordToChoose/WordToChoose.tscn" id="2_bh4qc"]
+
+[node name="WordChooser" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_ay7qh")
+WordToChooseScene = ExtResource("2_bh4qc")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 654.0
+offset_bottom = 36.0

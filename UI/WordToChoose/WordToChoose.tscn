@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://blwj1vlcnwa3a"]
+
+[ext_resource type="Script" path="res://UI/WordToChoose/word_to_choose.gd" id="1_bikct"]
+
+[node name="WordToChoose" type="Button"]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Hello"
+script = ExtResource("1_bikct")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]
