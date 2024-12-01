@@ -25,6 +25,10 @@ func _on_state_changed(new_state):
 		_show_words_for_phase(GlobalState.game_phase)
 
 func _on_word_selected(word: Dictionary, word_instance: Node):
+	# Only process word selection when in THINKING state
+	if GlobalState.current_state != GlobalState.State.THINKING:
+		return
+		
 	print("Selected word: %s, Value: %d" % [word["name"], word["value"]])
 	# Remove the word from available_words
 	GameData.remove_word(GlobalState.game_phase, word)

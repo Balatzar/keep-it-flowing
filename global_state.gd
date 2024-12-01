@@ -15,7 +15,7 @@ const RATING_WORDS = {
 }
 
 # Current state
-var current_state: State = State.START
+var current_state: State = State.THINKING
 
 var selected_word: Dictionary = {}
 var game_phase: int = 1
