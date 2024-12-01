@@ -2,10 +2,26 @@ extends Control
 
 @export var WordScene: PackedScene
 
+var phrases_by_phases = {
+	1: "Today at shool there was...",
+	2: "And it was really...",
+	3: "So I...",
+	4: "But then it...",
+	5: "So I decided to...",
+	6: "I'm telling you because you are not...",
+	7: "But I will tell..."
+}
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	print("WordFlow ready")
+	for child in $HBoxContainer.get_children():
+		child.queue_free()
 	GlobalState.state_changed.connect(_on_state_changed)
+	_update_current_phrase()
+
+func _update_current_phrase() -> void:
+	if phrases_by_phases.has(GlobalState.game_phase):
+		$CurrentPhrase.text = phrases_by_phases[GlobalState.game_phase]
 
 func _on_state_changed(new_state):
 	print(new_state)
@@ -22,6 +38,8 @@ func _on_state_changed(new_state):
 		timer.one_shot = true
 		timer.timeout.connect(_on_word_timer_timeout)
 		timer.start()
+	elif new_state == GlobalState.State.THINKING:
+		_update_current_phrase()
 
 func _on_word_timer_timeout():
 	# Clear all words
