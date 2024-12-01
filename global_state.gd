@@ -20,6 +20,9 @@ var current_state: State = State.START
 var selected_word: Dictionary = {}
 var game_phase: int = 1
 
+# Collection of selected words
+var selected_words: Array[Dictionary] = []
+
 # Signal to broadcast state changes
 signal state_changed(new_state: State)
 
@@ -48,3 +51,8 @@ func get_score_rating(score: int) -> ScoreRating:
 # Function to get word response for a rating
 func get_rating_word(rating: ScoreRating) -> String:
 	return RATING_WORDS[rating]
+
+# Function to add a selected word to the collection
+func add_selected_word(word: Dictionary):
+	selected_words.append(word)
+	print("Added selected word: ", word.get("name"), " Value: ", word.get("value"))

@@ -8,17 +8,6 @@ extends Control
 @export var min_display_time: float = 0.5
 @export var max_display_time: float = 1.5
 
-var phrases_by_phases = {
-	1: "Today at shool there was...",
-	2: "And it was really...",
-	3: "So I...",
-	4: "But then it...",
-	5: "So I decided to...",
-	6: "I'm telling you because you are not...",
-	7: "But I will tell..."
-}
-
-var filler_words = ["And", "Uh", "Emm", "You know", "And then", "You see", "There was"]
 var filler_spawn_timer: Timer
 var rng = RandomNumberGenerator.new()
 
@@ -52,7 +41,7 @@ func _spawn_random_filler_word() -> void:
 		return
 		
 	# Get a random filler word
-	var random_word = filler_words[randi() % filler_words.size()]
+	var random_word = GameData.get_random_filler_word()
 	
 	# Create the word instance
 	var word_instance = WordScene.instantiate()
@@ -81,8 +70,7 @@ func _spawn_random_filler_word() -> void:
 	filler_spawn_timer.start()
 
 func _update_current_phrase() -> void:
-	if phrases_by_phases.has(GlobalState.game_phase):
-		$CurrentPhrase.text = phrases_by_phases[GlobalState.game_phase]
+	$CurrentPhrase.text = GameData.get_phrase_for_phase(GlobalState.game_phase)
 
 func _on_state_changed(new_state):
 	print(new_state)
@@ -126,8 +114,14 @@ func _on_selected_word_display_timeout():
 	for child in $HBoxContainer.get_children():
 		child.queue_free()
 	
-	# Increment game phase
-	GlobalState.game_phase += 1
+	# Get the score and rating
+	var score = GlobalState.selected_word.get("value")
+	var rating = GlobalState.get_score_rating(score)
+	
+	# Only increment game phase for GOOD or GREAT ratings
+	if rating == GlobalState.ScoreRating.GOOD or rating == GlobalState.ScoreRating.GREAT:
+		GlobalState.game_phase += 1
+		GlobalState.add_selected_word(GlobalState.selected_word)
 	
 	# Change state to RESPONDING
 	GlobalState.change_state(GlobalState.State.RESPONDING)
