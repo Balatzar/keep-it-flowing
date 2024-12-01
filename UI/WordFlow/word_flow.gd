@@ -96,15 +96,32 @@ func _on_state_changed(new_state):
 		# Create a timer to make the word disappear
 		var timer = Timer.new()
 		add_child(timer)
-		timer.wait_time = 1.0
+		timer.wait_time = 1.5
 		timer.one_shot = true
-		timer.timeout.connect(_on_word_timer_timeout)
+		timer.timeout.connect(_on_selected_word_display_timeout)
 		timer.start()
 	elif new_state == GlobalState.State.THINKING:
 		_update_current_phrase()
 		start_filler_words()
+	elif new_state == GlobalState.State.RESPONDING:
+		# Get the score from selected word
+		var score = GlobalState.selected_word.get("value")
+		var rating = GlobalState.get_score_rating(score)
+		
+		# Create word instance to display rating word
+		var word_instance = WordScene.instantiate()
+		word_instance.word = GlobalState.get_rating_word(rating)
+		$HBoxContainer.add_child(word_instance)
+		
+		# Create a timer to transition back to THINKING
+		var timer = Timer.new()
+		add_child(timer)
+		timer.wait_time = 1.0
+		timer.one_shot = true
+		timer.timeout.connect(_on_responding_timer_timeout)
+		timer.start()
 
-func _on_word_timer_timeout():
+func _on_selected_word_display_timeout():
 	# Clear all words
 	for child in $HBoxContainer.get_children():
 		child.queue_free()
@@ -112,6 +129,14 @@ func _on_word_timer_timeout():
 	# Increment game phase
 	GlobalState.game_phase += 1
 	
+	# Change state to RESPONDING
+	GlobalState.change_state(GlobalState.State.RESPONDING)
+
+func _on_responding_timer_timeout():
+	# Clear all words
+	for child in $HBoxContainer.get_children():
+		child.queue_free()
+		
 	# Change state back to THINKING
 	GlobalState.change_state(GlobalState.State.THINKING)
 

@@ -1,7 +1,18 @@
 extends Node
 
 # Define states
-enum State { START, THINKING, SELECTING_WORD }
+enum State { START, THINKING, SELECTING_WORD, RESPONDING }
+
+# Define score ratings
+enum ScoreRating { CRITICAL_FAILURE, FAIL, GOOD, GREAT }
+
+# Map ratings to response words
+const RATING_WORDS = {
+	ScoreRating.CRITICAL_FAILURE: "Noooooo!",
+	ScoreRating.FAIL: "No!",
+	ScoreRating.GOOD: "Yes!",
+	ScoreRating.GREAT: "Yesssssss!"
+}
 
 # Current state
 var current_state: State = State.START
@@ -22,3 +33,18 @@ func change_state(new_state: State):
 		current_state = new_state
 		emit_signal("state_changed", new_state)
 		print("State changed to:", new_state)
+
+# Function to get score rating from numeric score
+func get_score_rating(score: int) -> ScoreRating:
+	if score == 0:
+		return ScoreRating.CRITICAL_FAILURE
+	elif score >= 1 and score <= 99:
+		return ScoreRating.FAIL
+	elif score >= 100 and score <= 199:
+		return ScoreRating.GOOD
+	else:  # score >= 200 and score <= 300
+		return ScoreRating.GREAT
+
+# Function to get word response for a rating
+func get_rating_word(rating: ScoreRating) -> String:
+	return RATING_WORDS[rating]
