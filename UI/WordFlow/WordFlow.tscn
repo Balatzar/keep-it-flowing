@@ -9,10 +9,18 @@ anchors_preset = 0
 script = ExtResource("1_4dhp7")
 WordScene = ExtResource("2_5ucwb")
 
+[node name="CurrentPhrase" type="Label" parent="."]
+layout_mode = 0
+offset_right = 162.0
+offset_bottom = 25.0
+text = "Today at shool there was..."
+
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_right = 472.0
-offset_bottom = 40.0
+offset_left = 1.0
+offset_top = 64.0
+offset_right = 473.0
+offset_bottom = 109.0
 
 [node name="Word2" parent="HBoxContainer" instance=ExtResource("2_5ucwb")]
 layout_mode = 2

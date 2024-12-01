@@ -13,3 +13,12 @@ WordToChooseScene = ExtResource("2_bh4qc")
 layout_mode = 0
 offset_right = 654.0
 offset_bottom = 36.0
+
+[node name="WordToChoose" parent="HBoxContainer" instance=ExtResource("2_bh4qc")]
+layout_mode = 2
+
+[node name="WordToChoose2" parent="HBoxContainer" instance=ExtResource("2_bh4qc")]
+layout_mode = 2
+
+[node name="WordToChoose3" parent="HBoxContainer" instance=ExtResource("2_bh4qc")]
+layout_mode = 2

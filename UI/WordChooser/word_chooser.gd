@@ -26,6 +26,42 @@ var available_words = {
 		{"name": "Hurt", "value": 253},
 		{"name": "Magical", "value": 42},
 		{"name": "Exhausted", "value": 0}
+	],
+	3: [
+		{"name": "Run away", "value": 152},
+		{"name": "Stay calm", "value": 171},
+		{"name": "Ask for help", "value": 91},
+		{"name": "Fix it", "value": 10},
+		{"name": "Ignore it", "value": 0},
+		{"name": "Write about it", "value": 264},
+		{"name": "Laugh it off", "value": 15},
+		{"name": "Cry", "value": 100},
+		{"name": "Tell a friend", "value": 5},
+		{"name": "Keep it secret", "value": 295}
+	],
+	4: [
+		{"name": "Scary", "value": 18},
+		{"name": "Mean", "value": 22},
+		{"name": "Silly", "value": 0},
+		{"name": "Helpful", "value": 154},
+		{"name": "Strict", "value": 207},
+		{"name": "Distracted", "value": 267},
+		{"name": "Confused", "value": 71},
+		{"name": "Busy", "value": 241},
+		{"name": "Angry", "value": 102},
+		{"name": "Patient", "value": 10}
+	],
+	5: [
+		{"name": "Alice", "value": 220},
+		{"name": "Benjamin", "value": 0},
+		{"name": "Clara", "value": 0},
+		{"name": "David", "value": 263},
+		{"name": "Elodie", "value": 107},
+		{"name": "Felix", "value": 0},
+		{"name": "Gabrielle", "value": 250},
+		{"name": "Hugo", "value": 197},
+		{"name": "Isabelle", "value": 222},
+		{"name": "Jules", "value": 162}
 	]
 }
 
